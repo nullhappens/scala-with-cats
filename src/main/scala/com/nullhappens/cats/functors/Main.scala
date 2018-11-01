@@ -17,7 +17,7 @@ object Main extends App {
       override def map[A, B](fa: Tree[A])(f: A => B): Tree[B] =
         fa match {
           case Branch(left, right) => Branch(map(left)(f), map(right)(f))
-          case Leaf(value) => Leaf(f(value))
+          case Leaf(value)         => Leaf(f(value))
         }
     }
 
@@ -26,8 +26,8 @@ object Main extends App {
     def leaf[A](value: A): Tree[A] = Leaf(value)
   }
 
-  val tree = Tree.branch(Tree.leaf(10), Tree.leaf(22))
-  val modifiedTree = Functor[Tree].map(tree)(_ * 2)
+  val tree          = Tree.branch(Tree.leaf(10), Tree.leaf(22))
+  val modifiedTree  = Functor[Tree].map(tree)(_ * 2)
   val modifiedTree2 = tree.map(_ * 2)
   assert(modifiedTree == modifiedTree2)
   println(tree)

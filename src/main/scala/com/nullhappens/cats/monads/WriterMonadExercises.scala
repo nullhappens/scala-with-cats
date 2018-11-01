@@ -53,7 +53,7 @@ object WriterMonadExercises extends App {
   )
   println(writer3.run)
 
-  val writer4 = writer1.mapBoth{ (log, res ) =>
+  val writer4 = writer1.mapBoth { (log, res) =>
     (log.map(_ + "!"), res * 1000)
   }
   println(writer4.run)
@@ -67,20 +67,23 @@ object WriterMonadExercises extends App {
 
   // Exercise 4.7.3
   def slowly[A](body: => A) =
-    try body finally Thread.sleep(500)
+    try body
+    finally Thread.sleep(500)
 
   def factorial(n: Int): Int = {
-    val ans = slowly(if(n == 0) 1 else n * factorial(n - 1))
+    val ans = slowly(if (n == 0) 1 else n * factorial(n - 1))
     println(s"fact $n $ans")
     ans
   }
   println(factorial(5))
 
   // This code logs different results from different computations
-  Await.result(Future.sequence(Vector(
-    Future(factorial(3)),
-    Future(factorial(3))
-  )), 10.seconds)
+  Await.result(Future.sequence(
+                 Vector(
+                   Future(factorial(3)),
+                   Future(factorial(3))
+                 )),
+               10.seconds)
 
   // Rewriting factorial to use Writer
   def factorial2(n: Int): Logged[Int] =
@@ -91,11 +94,12 @@ object WriterMonadExercises extends App {
     } yield ans
 
   val results =
-    Await.result(Future.sequence(Vector(
-      Future(factorial2(3).run),
-      Future(factorial2(3).run)
-    )), 10.seconds)
-  for ( (log, _) <- results; line <- log) println(line)
-
+    Await.result(Future.sequence(
+                   Vector(
+                     Future(factorial2(3).run),
+                     Future(factorial2(3).run)
+                   )),
+                 10.seconds)
+  for ((log, _) <- results; line <- log) println(line)
 
 }

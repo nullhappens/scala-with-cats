@@ -12,7 +12,7 @@ object Monoid {
   def apply[A](implicit monoid: Monoid[A]): Monoid[A] = monoid
 }
 
-object MonoidOps{
+object MonoidOps {
   // Define monoids for boolean
   implicit val booleanAndMonoid: Monoid[Boolean] =
     new Monoid[Boolean] {

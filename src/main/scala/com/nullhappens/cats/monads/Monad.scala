@@ -1,6 +1,5 @@
 package com.nullhappens.cats.monads
 
-
 // partial definition of monad
 //trait Monad[F[_]] {
 //  def pure[A](a: A): F[A]
@@ -19,16 +18,14 @@ object MonadMain extends App {
   import cats.instances.option._
   import cats.instances.list._
 
-
-  def sumSquare[F[_] : Monad](a: F[Int], b: F[Int]): F[Int] =
+  def sumSquare[F[_]: Monad](a: F[Int], b: F[Int]): F[Int] =
     for {
       x <- a
       y <- b
-    } yield x*x + y*y
+    } yield x * x + y * y
 
   println(sumSquare(Option(20), Option(10)))
   println(sumSquare(List(1, 2, 3), List(4, 5)))
-
 
   import cats.Id
 

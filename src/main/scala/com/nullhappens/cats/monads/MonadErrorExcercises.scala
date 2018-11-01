@@ -8,7 +8,7 @@ import cats.syntax.monadError._
 import scala.util.Try
 import cats.instances.try_._
 
-object MonadErrorExcercises extends App{
+object MonadErrorExcercises extends App {
 
   type ErrorOrA[A] = Either[String, A]
   val monadError = MonadError[ErrorOrA, String]
@@ -21,7 +21,7 @@ object MonadErrorExcercises extends App{
 
   val handled: ErrorOrA[ErrorOrA[String]] = monadError.handleError(failure) {
     case "Some sort of error" => monadError.pure("actually this is fine")
-    case other => monadError.raiseError(s"actually its not fine: $other")
+    case other                => monadError.raiseError(s"actually its not fine: $other")
   }
   println(handled)
 
@@ -42,7 +42,7 @@ object MonadErrorExcercises extends App{
   println(ensureResult2)
   assert(ensureResult == ensureResult2)
 
-  val exn: Throwable = new RuntimeException("Something dun goofd")
+  val exn: Throwable     = new RuntimeException("Something dun goofd")
   val triedInt: Try[Int] = exn.raiseError[Try, Int]
   println(triedInt)
 }

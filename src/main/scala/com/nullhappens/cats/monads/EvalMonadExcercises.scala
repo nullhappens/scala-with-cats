@@ -3,7 +3,7 @@ package com.nullhappens.cats.monads
 import cats.Eval
 
 object EvalMonadExcercises extends App {
-  val now = Eval.now{
+  val now = Eval.now {
     println("computing now!")
     math.random() + 1000
   }
@@ -11,7 +11,7 @@ object EvalMonadExcercises extends App {
   println(now.value)
   println(now.value)
 
-  val later = Eval.later{
+  val later = Eval.later {
     println("computing later!")
     math.random() + 1000
   }
@@ -19,7 +19,7 @@ object EvalMonadExcercises extends App {
   println(later.value)
   println(later.value)
 
-  val always = Eval.always{
+  val always = Eval.always {
     println("computing always")
     math.random() + 1000
   }
@@ -27,18 +27,20 @@ object EvalMonadExcercises extends App {
   println(always.value)
   println(always.value)
 
-  val greeting = Eval.always{
-    println("Step 1")
-    "Hello"
-  }.map{ str =>
-    println("Step 2")
-    s"$str World!"
-  }
+  val greeting = Eval
+    .always {
+      println("Step 1")
+      "Hello"
+    }
+    .map { str =>
+      println("Step 2")
+      s"$str World!"
+    }
   println(greeting.value)
 
   val ans = for {
-    a <- Eval.now{ println("Calculating A"); 40 }
-    b <- Eval.always{ println("Calculating B"); 2}
+    a <- Eval.now { println("Calculating A"); 40 }
+    b <- Eval.always { println("Calculating B"); 2 }
   } yield {
     println("Adding A and B")
     a + b
@@ -47,14 +49,17 @@ object EvalMonadExcercises extends App {
   println(ans.value)
   println(ans.value)
 
-  val saying = Eval.always{
-    println("Step 1")
-    "The Cat"
-  }.map { str =>
-    println("Step 2")
-    s"$str sat on"
-  }.memoize
-    .map{ str =>
+  val saying = Eval
+    .always {
+      println("Step 1")
+      "The Cat"
+    }
+    .map { str =>
+      println("Step 2")
+      s"$str sat on"
+    }
+    .memoize
+    .map { str =>
       println("Step 3")
       s"$str the mat"
     }
@@ -104,7 +109,7 @@ object EvalMonadExcercises extends App {
     }
 
   def foldRight[A, B](as: List[A], acc: B)(fn: (A, B) => B): B =
-    foldRightEval(as, Eval.now(acc)){ (a, b) =>
+    foldRightEval(as, Eval.now(acc)) { (a, b) =>
       b.map(fn(a, _))
     }.value
 
