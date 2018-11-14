@@ -48,11 +48,11 @@ object CustomMonadsExcercises extends App {
   val value: Tree[Int] = branch(leaf(100), leaf(200)).flatMap(x => branch(leaf(x - 1), leaf(x + 1)))
   println(value)
 
-  for {
-    a <- branch(leaf(100), leaf(200))
-    b <- branch(leaf(a - 10), leaf(a + 10))
-    c <- branch(leaf(b - 1), leaf(b + 1))
-  } yield c
+//  for {
+//    a <- branch(leaf(100), leaf(200))
+//    b <- branch(leaf(a - 10), leaf(a + 10))
+//    c <- branch(leaf(b - 1), leaf(b + 1))
+//  } yield c
 
 }
 
