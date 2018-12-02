@@ -16,7 +16,7 @@ scalacOptions ++= Seq(
   "-Ypartial-unification" // allow the compiler to unify type constructors of different arities
 )
 
-libraryDependencies += "org.typelevel" %% "cats-core" % "1.0.0-MF"
+libraryDependencies += "org.typelevel" %% "cats-core" % "1.5.0-RC1"
 
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3")
 addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.2.4")
