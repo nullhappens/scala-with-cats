@@ -12,7 +12,7 @@ import cats.syntax.validated._
 sealed trait Predicate[E, A] {
   import Predicate._
 
-  def run[E, A](implicit s: Semigroup[E]): A => Either[E, A] =
+  def run(implicit s: Semigroup[E]): A => Either[E, A] =
     (a: A) => this(a).toEither
 
   def and(that: Predicate[E, A]): Predicate[E, A] = And(this, that)
